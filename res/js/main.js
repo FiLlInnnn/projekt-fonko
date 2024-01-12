@@ -1,5 +1,75 @@
+import { Enemy } from "./ui/entities.js";
+import { Background } from "./ui/basic-ui.js";
+
+const battleBus = new Enemy("BattleBus", 50, 1, 0, 50, 169);
+const fnkid = new Enemy("fnkid", 50, 1, 2, 50, 269);
+const background = new Background();
+
+
+
 const canvas = document.getElementById("canvas");
 const ctx = canvas.getContext("2d");
+
+
+const gameloop = () => {
+    //clear
+    clear();
+    //update
+    update();
+    //render
+    render();
+    //fps
+    fps();
+    //gameloop znovu
+    window.requestAnimationFrame(gameloop);
+
+}
+
+const clear = () => {
+    background.draw(ctx)
+    canvas.width = 1280;
+    canvas.height = 720;
+    background.draw(ctx);
+}
+
+
+const update = () => {
+    battleBus.update();
+    fnkid.update();
+}
+const render = () => {
+    battleBus.draw(ctx);
+    fnkid.draw(ctx);
+}
+const fps = () => {}
+
+window.onload = () => {
+    window.requestAnimationFrame(gameloop);
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*
 const battlebus = new Image();
 battlebus.src = "./res/img/battle_bus.png";
 
@@ -48,7 +118,7 @@ ctx.stroke();
 ctx.beginPath();
 ctx.arc(550, 50, 20, 0,2 * Math.PI)
 ctx.moveTo*/
-
+/*
 ctx.strokeStyle = "#000";
 ctx.beginPath();
 ctx.arc(525, 110, 60, 0, 2 * Math.PI);
@@ -66,6 +136,7 @@ let busY = 200;
 let busYVelocity = 1;*/
 
 // {} - objekt (object)
+/*
 let bus = {
     x: 200,
     y: 200,
@@ -101,3 +172,4 @@ window.onload = () => {
         ctx.drawImage(battlebus, bus.x, bus.y, 200, 200);
     }, 1);
 }
+*/
