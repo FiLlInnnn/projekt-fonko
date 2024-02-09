@@ -1,73 +1,76 @@
 import { Enemy } from "./ui/entities.js";
 import { Background } from "./ui/basic-ui.js";
 
-const battleBus = new Enemy("BattleBus", 50, 1, 0, 50, 169);
-const fnkid = new Enemy("fnkid", 50, 1, 2, 50, 269);
 const background = new Background();
 
-
+const enemies = [];
 
 const canvas = document.getElementById("canvas");
 const ctx = canvas.getContext("2d");
 
-
 const gameloop = () => {
-    //clear
-    clear();
-    //update
-    update();
-    //render
-    render();
-    //fps
-    fps();
-    //gameloop znovu
-    window.requestAnimationFrame(gameloop);
-
-}
+  //clear
+  clear();
+  //update
+  update();
+  //render
+  render();
+  //fps
+  fps();
+  //gameloop znovu
+  window.requestAnimationFrame(gameloop);
+};
 
 const clear = () => {
-    background.draw(ctx)
-    canvas.width = 1280;
-    canvas.height = 720;
-    background.draw(ctx);
-}
-
+  background.draw(ctx);
+  canvas.width = 1280;
+  canvas.height = 720;
+  background.draw(ctx);
+};
 
 const update = () => {
-    battleBus.update();
-    fnkid.update();
-}
+    enemies.map((a) => {
+        a.update();
+    })
+};
 const render = () => {
-    battleBus.draw(ctx);
-    fnkid.draw(ctx);
-}
-const fps = () => {}
+    enemies.map((a) => {
+        a.draw(ctx);
+    })
+};
+const fps = () => {};
 
-window.onload = () => {
-    window.requestAnimationFrame(gameloop);
+const loadData = async () => {
+  const entitiesFile = await fetch("./res/data/entities.json");
+  const data = await entitiesFile.json();
+  Enemy.entitiesData = data;
+};
 
-}
+const genEnemies = () => {
+  Enemy.entitiesData.map((a) => {
+    enemies.push(
+      new Enemy(
+        a.name,
+        a.hp,
+        a.dmg,
+        a.imagePath,
+        a.width,
+        a.hight,
+        a.velocity,
+        a.type
+      )
+    );
+    //push / prida hodnotu do pole
+  });
+};
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+window.onload = async () => {
+  await loadData();
+  console.log(Enemy.entitiesData);
+  await genEnemies();
+  console.log(enemies);
+  window.requestAnimationFrame(gameloop);
+};
 
 /*
 const battlebus = new Image();

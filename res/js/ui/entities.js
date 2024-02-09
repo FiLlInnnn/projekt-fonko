@@ -9,28 +9,35 @@ const enemy = {
 //šablona - třída (class)
 //třída (class) vždy velké první písmeno
 export class Enemy {
+  // static- dana vec patri tride (v tomto pripade trie Enemy)
+  //vec pouzivame pomoci zapisu Trida.vec
+  //Enemy.entitiesData
+  static entitiesData;
   //constructor - metoda ktará se volá při bytváření objektu
-  constructor(name, hp, dmg, type, x, y) {
+  constructor(name, hp, dmg, imagePath, width, hight, velocity, type) {
     //this - ukazuje na vzniklou intstaci - kopie od třídy
     this.name = name;
     this.hp = hp;
     this.dmg = dmg;
+    this.imagePath = imagePath;
     this.img = new Image();
-    this.setType(type);
-    this.img.src = this.path;
+    this.img.src = this.imagePath;
     this.position = {
-      x: x,
-      y: y,
+      x: 0,
+      y: 0,
     };
+    if (type == "ground") {
+      this.position.y = 550;
+    }
     this.ratio = 0.5;
     this.size = {
-      wide: 200 * this.ratio,
-      height: 200 * this.ratio,
+      wide: width * this.ratio,
+      height: hight * this.ratio,
     };
     this.velocity = {
-        x: 15,
-        y: 0,
-    }
+      x: velocity,
+    };
+    this.type = type;
   }
 
   draw(ctx) {
@@ -43,17 +50,6 @@ export class Enemy {
     );
   }
 
-  setType(type) {
-    const paths = [
-      "./res/img/enemies/battle_bus.png",
-      "./res/img/enemies/BOSS.png",
-      "./res/img/enemies/fnkid.png",
-      "./res/img/enemies/kevin.png",
-      "./res/img/enemies/mecha.png",
-    ];
-    this.path = paths[type];
-  }
-
   update() {
     this.move();
   }
@@ -61,10 +57,10 @@ export class Enemy {
   move() {
     this.position.x += this.velocity.x;
     if (this.position.x >= 410) {
-        this.velocity.x *= -1;
+      this.velocity.x *= -1;
     }
     if (this.position.x <= 0) {
-        this.velocity.x *= -1;
+      this.velocity.x *= -1;
     }
   }
 }
