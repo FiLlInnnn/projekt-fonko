@@ -1,7 +1,18 @@
 import { Enemy } from "./ui/entities.js";
 import { Background } from "./ui/basic-ui.js";
+import { Twins } from "./ui/twins.js";
 
 const background = new Background();
+const twins = new Twins(100, 495, 50, 245, 610);
+
+
+document.addEventListener("click", (e) => {
+  console.log(e.clientX);
+  console.log(e.clientY);
+  const canvasPos = canvas.getBoundingClientRect();
+  console.log(canvasPos.left);
+  console.log(canvasPos.top);
+})
 
 const enemies = [];
 
@@ -31,9 +42,11 @@ const clear = () => {
 const update = () => {
     enemies.map((a) => {
         a.update();
+        twins.detectCollisions(a);
     })
 };
 const render = () => {
+    twins.draw(ctx);
     enemies.map((a) => {
         a.draw(ctx);
     })
@@ -71,6 +84,57 @@ window.onload = async () => {
   console.log(enemies);
   window.requestAnimationFrame(gameloop);
 };
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 /*
 const battlebus = new Image();

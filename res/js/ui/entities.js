@@ -56,14 +56,9 @@ export class Enemy {
 
   move() {
     this.position.x += this.velocity.x;
-    if (this.position.x >= 410) {
-      this.velocity.x *= -1;
-    }
-    if (this.position.x <= 0) {
-      this.velocity.x *= -1;
     }
   }
-}
+
 
 //const myEnemy = new Enemy("Enemy 1", 100, 12); // vytvořeni kopie od šablony - objekt(instance)
 const foo = new Enemy("kojpip", 1, 1, 0);
