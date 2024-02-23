@@ -5,14 +5,20 @@ import { Twins } from "./ui/twins.js";
 const background = new Background();
 const twins = new Twins(100, 495, 50, 245, 610);
 
+let mouse = {
+  x: 0,
+  y: 0,
+};
+
 
 document.addEventListener("click", (e) => {
-  console.log(e.clientX);
-  console.log(e.clientY);
-  const canvasPos = canvas.getBoundingClientRect();
-  console.log(canvasPos.left);
-  console.log(canvasPos.top);
-})
+const rect = canvas.getBoundingClientRect();
+mouse.x = ((e.clientX - rect.left) / (rect.right - rect.left))* canvas.width;
+mouse.y = ((e.clientY - rect.top) / (rect.bottom - rect.top)) * canvas.height;
+for (const enemy of enemies) {
+  if (enemy.detectCollisions(mouse)) break;
+}
+});
 
 const enemies = [];
 
